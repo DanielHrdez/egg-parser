@@ -1,0 +1,4 @@
+#!/bin/bash
+bin/eggc.js $1.egg
+# add in this folder the evm executable with oop extensions
+bin/evm $1.json

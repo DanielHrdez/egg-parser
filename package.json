@@ -1,0 +1,46 @@
+{
+  "name": "@ull-esit-pl-2122/egg-oop-parser-xxxxx",
+  "version": "1.2.2",
+  "description": "Lab for language processors",
+  "main": "src/parse.js",
+  "bin": {
+    "eggc": "bin/eggc.js"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "restricted"
+  },
+  "scripts": {
+    "test": "npm run build; nyc --reporter=lcov --reporter=text-summary --report-dir=docs/coverage -o docs mocha",
+    "doc": "npm run build; jsdoc -d docs -c jsdoc.json",
+    "debug": "npm run build; node --inspect-brk bin/eggc.js examples/brackets.egg",
+    "fun-fun": "npm run compile-funfun && evm examples/fun-fun.json",
+    "dodef": "npm run compile-dodef && evm examples/dodefsum.json",
+    "compile-syntax": "npm run build && node bin/eggc.js examples/syntax.egg",
+    "compile-funfun": "npm run build && node bin/eggc.js examples/fun-fun.egg",
+    "compile-dodef": "npm run build && node bin/eggc.js examples/dodefsum.egg",
+    "build": "nearleyc src/egg.ne -o src/grammar.js",
+    "diagram": "nearley-railroad src/egg.ne -o docs/egg-syntax-diagram.html",
+    "link-egg": "npm link @ull-esit-pl-2122/eloquentjsegg",
+    "link-gen": "npm link @ull-esit-pl-2122/lexer-generator-solution"
+  },
+  "keywords": [
+    "ULL",
+    "parsing",
+    "AST"
+  ],
+  "author": "Casiano Rodriguez Leon <crguezl@ull.edu.es> (https://crguezl.github.io/)",
+  "license": "ISC",
+  "dependencies": {
+    "@ull-esit-pl-2122/lexer-generator-aluXXXX": "^4.1.2",
+    "commander": "^9.0.0"
+  },
+  "devDependencies": {
+    "chai": "^4.3.6",
+    "jsdoc": "^3.6.10",
+    "mocha": "^9.2.2",
+    "nyc": "^15.1.0",
+    "tui-jsdoc-template": "^1.2.2",
+    "nearley": "^2.20.1"
+  }
+}

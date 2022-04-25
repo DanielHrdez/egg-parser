@@ -1,0 +1,13 @@
+{
+    "source": {
+      "include": [
+        "src/grammar.js",
+        "bin/eggc.js"
+      ],
+      "includePattern": ".+\\.js(doc|x)?$",
+      "excludePattern": "(^|\\/|\\\\)_"
+    },
+    "opts": {
+        "template": "node_modules/tui-jsdoc-template"
+    }
+}
