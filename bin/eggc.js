@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /**
  * @description A executable to be able to compile eggc lang files
- * @author XXXX <aluXXXX@ull.edu.es>
- * @since XX/XX/20XX
+ * @author Daniel Hernandez de Leon <alu0101331720@ull.edu.es>
+ * @since 25/04/2022
  */
 
  'use strict';
