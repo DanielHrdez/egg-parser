@@ -19,13 +19,13 @@ const {
 %}
 
 @lexer lexer
-program -> expression %EOF 
+program -> expression %EOF  {id}
 expression -> 
-      %STRING  optProperties  
-    | %NUMBER  optProperties  
-    | %WORD applies           
-    | bracketExp              
-    | curlyExp                
+      %STRING  optProperties  {buildStringValue}
+    | %NUMBER  optProperties  {buildNumberValue}
+    | %WORD applies           {buildWordApplies}
+    | bracketExp              {buildArray}
+    | curlyExp                {buildObject}
 
 
 applies -> calls     
@@ -36,7 +36,7 @@ properties ->  bracketExp  applies
     | selector applies                           
 
 parenExp   -> "("  commaExp ")"  
-bracketExp -> "["  commaExp "]"  
+bracketExp -> "["  commaExp "]"  {% ([lb, commaExp, rb]) => checkNonEmpty(lb, commaExp) %}
 curlyExp   -> "{"  commaExp "}"  
 
 selector   ->  

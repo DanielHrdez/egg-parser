@@ -8,7 +8,12 @@ const lex = require('./lex-pl.js');
 // Check parenthesis balance
 // TODO: check array brackets balance
 function parBalance(line) {
-   /* XXXX use yours XXXX */
+  let stack = 0;
+  line.split('').forEach((token) => {
+    if (['(', '['].includes(token)) stack++;
+    else if ([')', ']'].includes(token)) stack--;
+  });
+  return stack;
 }
 
 function parse(p) {
@@ -38,7 +43,18 @@ function parseFromFile(origin) {
 };
 
 let getTokens = function(line) {
-   /* XXXX use yours XXXX */
+  const result = [];
+  let t = null;
+  do {
+    try {
+      t = lex(line);
+      result.push(t);
+    } catch (e) {
+      result.push({type: 'ERROR', value: e});
+      break;
+    }
+  } while (t);
+  return result;
 };
 
 module.exports = {
