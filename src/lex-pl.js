@@ -1,5 +1,5 @@
 const { tokens } = require('./tokens.js');
-const { nearleyLexer } = require("@ull-esit-pl-2122/lexer-generator-solution");
+const { nearleyLexer } = require('@ull-esit-pl-2122/lexer-generator-daniel-hernandez-de_leon-alu0101331720');
 
 function colonTransformer(tokens) {  
 }
