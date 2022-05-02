@@ -48,7 +48,7 @@ properties ->
     | selector applies      {% buildKind['property'] %}
 
 parenExp   -> "(" commaExp ")"  {% ([lp, commaExp, rp]) => commaExp %}
-bracketExp -> "[" commaExp "]"  {% ([lb, commaExp, rb]) => checkNonEmpty(lb, commaExp) %}
+bracketExp -> "[" commaExp "]"  {% ([lb, commaExp, rb]) => checkNonEmpty(commaExp) %}
 curlyExp   -> "{" commaExp "}"  {% ([lc, commaExp, rc]) => commaExp %}  
 
 selector   ->  
