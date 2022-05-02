@@ -7,43 +7,59 @@
 
 const lexer = require('./lex-pl.js');
 const { 
-        buildStringValue, 
-        buildNumberValue, 
+        buildStringValue,
+        buildNumberValue,
+        buildRegexpValue,
         buildWordApplies,
         buildKind,
         selector2Bracket,
         buildArray,
         buildObject,
+        checkNonEmpty,
+        buildDo,
+        dealWithError,
 } = require('./build-ast.js');
 
 %}
 
 @lexer lexer
-program -> expression %EOF  {id}
+
+program -> expression %EOF  {% id %}
+
 expression -> 
-      %STRING  optProperties  {buildStringValue}
-    | %NUMBER  optProperties  {buildNumberValue}
-    | %WORD applies           {buildWordApplies}
-    | bracketExp              {buildArray}
-    | curlyExp                {buildObject}
+      %STRING optProperties     {% buildStringValue %}
+    | %NUMBER optProperties     {% buildNumberValue %}
+    | %REGEXP optProperties     {% buildRegexpValue %}
+    | %WORD applies             {% buildWordApplies %}
+    | bracketExp optProperties  {% buildArray %}
+    | curlyExp optProperties    {% buildObject %}
+    | "(" commaExp ")"          {% buildDo %}
+    | %EOF                      {% dealWithError %}
 
+applies ->
+      calls         {% id %}
+    | properties    {% id %}
+    | null          {% () => null %}
 
-applies -> calls     
-    | properties     
-    | null           
-calls ->  parenExp applies           
-properties ->  bracketExp  applies   
-    | selector applies                           
+calls -> parenExp applies   {% buildKind['apply'] %}
 
-parenExp   -> "("  commaExp ")"  
-bracketExp -> "["  commaExp "]"  {% ([lb, commaExp, rb]) => checkNonEmpty(lb, commaExp) %}
-curlyExp   -> "{"  commaExp "}"  
+properties ->
+      bracketExp applies    {% buildKind['property'] %}
+    | selector applies      {% buildKind['property'] %}
+
+parenExp   -> "(" commaExp ")"  {% ([lp, commaExp, rp]) => commaExp %}
+bracketExp -> "[" commaExp "]"  {% ([lb, commaExp, rb]) => checkNonEmpty(lb, commaExp) %}
+curlyExp   -> "{" commaExp "}"  {% ([lc, commaExp, rc]) => commaExp %}  
 
 selector   ->  
-     "." %WORD           
-   | "." %NUMBER         
-commaExp -> null                 
-   | expression ("," expression  
+      "." %WORD     {% selector2Bracket %}
+    | "." %NUMBER   {% selector2Bracket %}
 
-optProperties -> null 
-   | properties       
+commaExp -> 
+      null                       {% () => [] %}
+    | expression "," commaExp    {% ([exp, comma, commaExp]) => [exp, ...commaExp] %}
+    | expression                 {% ([e]) => [e] %}
+
+optProperties ->
+      null          {% () => null %}
+    | properties    {% id %}
