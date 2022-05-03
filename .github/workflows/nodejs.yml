@@ -25,7 +25,7 @@ jobs: # jobs are made of steps
       with:
         node-version: ${{ matrix.node-version }}
         registry-url: https://npm.pkg.github.com/
-    - run: echo "//npm.pkg.github.com/:_authToken=${{secrets.PAT}}" >> .npmrc
+    - run: echo "//npm.pkg.github.com/:_authToken=${{secrets.PL}}" >> .npmrc
     - run: npm install
     - run: npm install @ull-esit-pl-2122/lexer-generator-daniel-hernandez-de_leon-alu0101331720
     - run: npm test

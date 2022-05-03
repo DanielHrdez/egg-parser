@@ -4,23 +4,27 @@
  * @see {@link https://ull-esit-pl-2122.github.io/temas/syntax-analysis/ast.html#gramatica-informal-de-los-arboles-del-parser-de-egg}
  */
 
+function buildNode(node, apply) {
+  if (!apply) return node;
+  if (!apply.operator) {
+    apply.operator = node;
+    return apply;
+  }
+  let operator = apply.operator;
+  while (operator.operator) {
+    operator = operator.operator;
+  }
+  operator.operator = node;
+  return apply;
+}
+
 function buildNumberValue([numberNode, properties]) {
   const number = {
     type: 'value',
     value: numberNode.value,
     length: (numberNode.value + '').length,
   };
-  if (!properties) return number;
-  if (!properties.operator) {
-    properties.operator = number;
-    return properties;
-  }
-  let operator = properties.operator;
-  while (operator.operator) {
-    operator = operator.operator;
-  }
-  operator.operator = number;
-  return properties;
+  return buildNode(number, properties);
 }
 
 function buildStringValue([stringNode, properties]) {
@@ -33,17 +37,7 @@ function buildStringValue([stringNode, properties]) {
     length: stringNode.length,
     raw: stringValue,
   };
-  if (!properties) return string;
-  if (!properties.operator) {
-    properties.operator = string;
-    return properties;
-  }
-  let operator = properties.operator;
-  while (operator.operator) {
-    operator = operator.operator;
-  }
-  operator.operator = string;
-  return properties;
+  return buildNode(string, properties);
 }
 
 function buildWordApplies([word, applies]) {
@@ -52,17 +46,7 @@ function buildWordApplies([word, applies]) {
     length: word.value.length,
     name: word.value,
   };
-  if (!applies) return wordNode;
-  if (!applies.operator) {
-    applies.operator = wordNode;
-    return applies;
-  }
-  let operator = applies.operator;
-  while (operator.operator) {
-    operator = operator.operator;
-  }
-  operator.operator = wordNode;
-  return applies;
+  return buildNode(wordNode, applies);
 }
 
 function buildPropertyOrApply([parenExp, applies], kind) {
@@ -71,17 +55,7 @@ function buildPropertyOrApply([parenExp, applies], kind) {
     operator: null,
     args: parenExp,
   };
-  if (!applies) return result;
-  if (!applies.operator) {
-    applies.operator = result;
-    return applies;
-  }
-  let operator = applies.operator;
-  while (operator.operator) {
-    operator = operator.operator;
-  }
-  operator.operator = result;
-  return applies;
+  return buildNode(result, applies);
 }
 
 function selector2Bracket([_, word]) {
@@ -109,17 +83,7 @@ function buildArray([commaExp, properties]) {
     },
     args: commaExp,
   };
-  if (!properties) return arrayNode;
-  if (!properties.operator) {
-    applies.operator = arrayNode;
-    return applies;
-  }
-  let operator = properties.operator;
-  while (operator.operator) {
-    operator = operator.operator;
-  }
-  operator.operator = arrayNode;
-  return properties;
+  return buildNode(arrayNode, properties);
 }
 
 function buildDo([lp, commaExp, rp]) {
@@ -134,7 +98,6 @@ function buildDo([lp, commaExp, rp]) {
   };
 }
 
-
 function buildObject([commaExp, properties]) {
   const objectNode = {
     type: 'apply',
@@ -145,17 +108,7 @@ function buildObject([commaExp, properties]) {
     },
     args: commaExp,
   };
-  if (!properties) return objectNode;
-  if (!properties.operator) {
-    properties.operator = objectNode;
-    return properties;
-  }
-  let operator = properties.operator;
-  while (operator.operator) {
-    operator = operator.operator;
-  }
-  operator.operator = objectNode;
-  return properties;
+  return buildNode(objectNode, properties);
 }
 
 function checkNonEmpty(commaExp) {
