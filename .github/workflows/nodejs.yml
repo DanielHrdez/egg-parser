@@ -29,3 +29,7 @@ jobs: # jobs are made of steps
     - run: npm install
     - run: npm install @ull-esit-pl-2122/lexer-generator-daniel-hernandez-de_leon-alu0101331720
     - run: npm test
+      # Environment variables
+      env:
+        CI: true
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
