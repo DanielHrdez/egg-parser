@@ -7,10 +7,12 @@ const LP = /(?<LP>\()/;
 const RP = /(?<RP>\))/;
 const LB = /(?<LB>\[)/;
 const RB = /(?<RB>\])/;
+const LC = /(?<LC>\{)/;
+const RC = /(?<RC>\})/;
 const DOT = /(?<DOT>\.)/;
 const COLON = /(?<COLON>:)/;
 
-const WORD  = /(?<WORD>[^\s\(\),"\[\]\.:]+)/;
+const WORD  = /(?<WORD>[^\s\(\),"\[\]\.:\{\}]+)/;
 
 const COMMA = /(?<COMMA>,)/;
 
@@ -23,6 +25,8 @@ const tokens = [
   RP,
   LB,
   RB,
+  LC,
+  RC,
   DOT,
   COLON,
   COMMA,

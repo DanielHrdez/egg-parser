@@ -32,14 +32,10 @@ describe('Compiler', () => {
     const result = parseFromFile('test/examples/' + testName + '.egg');
     simpleDeb(result).should.eql(simpleDeb(expected));
   };
-  let count = 0;
   testList.forEach((test) => {
-    if (count < 14 && count >= 13) {
-      it(test, () => {
-        runTest(test);
-      });
-    }
-    count++;
+    it(test, () => {
+      runTest(test);
+    });
   });
 });
 
@@ -53,7 +49,7 @@ describe('Compiler errors', () => {
   ];
 
   const runTest = (test) => {
-    xit(test.name, () => {
+    it(test.name, () => {
       should.throw(() => {
         parseFromFile(basePath + test.name + '.egg');
       }, test.error);

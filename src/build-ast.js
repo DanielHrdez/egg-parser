@@ -30,7 +30,7 @@ function buildStringValue([stringNode, properties]) {
   const string = {
     type: 'value',
     value: stringLiteral,
-    length: stringLength,
+    length: stringNode.length,
     raw: stringValue,
   };
   if (!properties) return string;
