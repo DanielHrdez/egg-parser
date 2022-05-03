@@ -19,8 +19,9 @@ jobs: # jobs are made of steps
 
     steps: # Clone the repo. See https://github.com/actions/checkout
     - uses: actions/checkout@v2
+    - uses: webfactory/ssh-agent@v0.4.1
       with:
-        persist-credentials: true
+        ssh-private-key: ${{ secrets.PL }}
     # Example of using an environment variable
     - name: Use Node.js ${{ matrix.node-version }} 
       uses: actions/setup-node@v1 # Install node. See https://github.com/actions/setup-node

@@ -1,6 +1,6 @@
 {
   "name": "@ull-esit-pl-2122/egg-oop-parser-daniel-hernandez-de_leon-alu0101331720",
-  "version": "2.0.19",
+  "version": "2.0.20",
   "description": "Lab for language processors",
   "main": "src/parse.js",
   "bin": {
