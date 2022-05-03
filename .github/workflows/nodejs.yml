@@ -19,16 +19,13 @@ jobs: # jobs are made of steps
 
     steps: # Clone the repo. See https://github.com/actions/checkout
     - uses: actions/checkout@v2
-    - uses: webfactory/ssh-agent@v0.4.1
-      with:
-        ssh-private-key: ${{ secrets.PAT }}
     # Example of using an environment variable
     - name: Use Node.js ${{ matrix.node-version }} 
       uses: actions/setup-node@v1 # Install node. See https://github.com/actions/setup-node
       with:
         node-version: ${{ matrix.node-version }}
         registry-url: https://npm.pkg.github.com/
-    - run: echo "//npm.pkg.github.com/:_authToken=${{secrets.PL}}" >> .npmrc
+    - run: echo "//npm.pkg.github.com/:_authToken=${{secrets.PAT}}" >> .npmrc
     - run: npm install
     - run: npm install @ull-esit-pl-2122/lexer-generator-daniel-hernandez-de_leon-alu0101331720
     - run: npm test
