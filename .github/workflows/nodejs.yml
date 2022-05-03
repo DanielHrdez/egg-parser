@@ -24,7 +24,7 @@ jobs: # jobs are made of steps
       uses: actions/setup-node@v1 # Install node. See https://github.com/actions/setup-node
       with:
         node-version: ${{ matrix.node-version }}
-    - run: echo "@ULL-ESIT-PL-2122:registry=https://npm.pkg.github.com/" >> .npmrc
+        registry-url: https://npm.pkg.github.com/
     - run: echo "//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}" >> .npmrc
     - run: npm install
     - run: npm install @ull-esit-pl-2122/lexer-generator-daniel-hernandez-de_leon-alu0101331720
