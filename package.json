@@ -1,6 +1,6 @@
 {
   "name": "@ull-esit-pl-2122/egg-oop-parser-daniel-hernandez-de_leon-alu0101331720",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "Lab for language processors",
   "main": "src/parse.js",
   "bin": {
@@ -11,6 +11,7 @@
     "access": "restricted"
   },
   "scripts": {
+    "n-t": "nearley-test src/grammar.js -i",
     "test": "npm run build; nyc --reporter=lcov --reporter=text-summary --report-dir=docs/coverage -o docs mocha",
     "doc": "npm run build; jsdoc -d docs -c jsdoc.json",
     "debug": "npm run build; node --inspect-brk bin/eggc.js examples/brackets.egg",

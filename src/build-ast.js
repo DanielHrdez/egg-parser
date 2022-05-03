@@ -38,11 +38,8 @@ function buildWordApplies([word, applies]) {
   };
   if (!applies) return wordNode;
   if (!applies.operator) {
-    return {
-      type: applies.type,
-      operator: wordNode,
-      args: applies.args
-    };
+    applies.operator = wordNode;
+    return applies;
   }
   let operator = applies.operator;
   while (operator.operator) {
@@ -53,20 +50,15 @@ function buildWordApplies([word, applies]) {
 }
 
 function buildPropertyOrApply([parenExp, applies], kind) {
-  if (!applies) return {
-    type: kind,
-    args: parenExp,
-  };
   const result = {
     type: kind,
+    operator: null,
     args: parenExp,
   };
+  if (!applies) return result;
   if (!applies.operator) {
-    return {
-      type: applies.type,
-      operator: result,
-      args: applies.args
-    };
+    applies.operator = result;
+    return applies;
   }
   let operator = applies.operator;
   while (operator.operator) {
@@ -77,7 +69,13 @@ function buildPropertyOrApply([parenExp, applies], kind) {
 }
 
 function selector2Bracket([_, word]) {
-  return [word];
+  const name = word.value;
+  return [{
+    type: 'value',
+    value: name,
+    length: name.length,
+    raw: `"${name}"`,
+  }];
 }
 
 const buildKind = {
@@ -96,11 +94,8 @@ function buildArray([commaExp, properties]) {
   };
   if (!properties) return arrayNode;
   if (!properties.operator) {
-    return {
-      type: 'property',
-      operator: arrayNode,
-      args: applies.args
-    };
+    applies.operator = arrayNode;
+    return applies;
   }
   let operator = properties.operator;
   while (operator.operator) {

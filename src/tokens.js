@@ -10,7 +10,7 @@ const RB = /(?<RB>\])/;
 const DOT = /(?<DOT>\.)/;
 const COLON = /(?<COLON>:)/;
 
-const WORD  = /(?<WORD>[^\s\(\),"\[\]]+)/;
+const WORD  = /(?<WORD>[^\s\(\),"\[\]\.]+)/;
 
 const COMMA = /(?<COMMA>,)/;
 
