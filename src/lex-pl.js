@@ -14,7 +14,33 @@ function colonTransformer(tokens) {
   return tokens;
 }
 
-let lexer = nearleyLexer(tokens, { transform: [colonTransformer] });
+function numberToDotsTransformer(tokens) {
+  tokens.forEach((token, index) => {
+    const next = tokens[index + 1];
+    if (
+      token.type === 'DOT' &&
+      next.type === 'NUMBER' &&
+      (next.value + '').includes('.')
+    ) {
+      const [integer, decimal] = String(next.value).split('.');
+      next.value = +integer;
+      next.length = integer.length;
+      tokens.splice(index + 2, 0, {
+        type: 'DOT',
+        value: '.',
+        length: 1,
+      });
+      tokens.splice(index + 3, 0, {
+        type: 'NUMBER',
+        value: +decimal,
+        length: decimal.length,
+      });
+    }
+  });
+  return tokens;
+}
+
+let lexer = nearleyLexer(tokens, { transform: [colonTransformer, numberToDotsTransformer] });
 
 //debugger;
 
