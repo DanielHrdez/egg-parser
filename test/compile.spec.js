@@ -32,14 +32,14 @@ describe('Compiler', () => {
     const result = parseFromFile('test/examples/' + testName + '.egg');
     simpleDeb(result).should.eql(simpleDeb(expected));
   };
-  let i = 0;
+  let count = 0;
   testList.forEach((test) => {
-    if (i < 5) {
+    if (count < 14 && count >= 13) {
       it(test, () => {
         runTest(test);
       });
     }
-    i++;
+    count++;
   });
 });
 

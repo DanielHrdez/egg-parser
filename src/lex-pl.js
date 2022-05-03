@@ -1,15 +1,29 @@
 const { tokens } = require('./tokens.js');
 const { nearleyLexer } = require('@ull-esit-pl-2122/lexer-generator-daniel-hernandez-de_leon-alu0101331720');
 
-function colonTransformer(tokens) {  
+function colonTransformer(tokens) {
+  // WORD, COLON into STRING, COMMA
+  // x: 4 -> "x", 4
+  debugger;
+  tokens.forEach((token, index) => {
+    if (token.type === 'COLON') {
+      const word = tokens[index - 1];
+      tokens[index - 1] = {
+        type: 'STRING',
+        value: word.value,
+        length: word.length,
+      };
+      tokens[index] = {
+        type: 'COMMA',
+        value: ',',
+        length: 1,
+      };
+    }
+  });
+  return tokens;
 }
 
-
-// Substitute DOT{.} NUMBER{4.3} by DOT NUMBER{4} DOT{.} NUMBER{3}
-function NumberToDotsTransformer(tokens) {
-}
-
-let lexer = nearleyLexer(tokens, { transform: [colonTransformer, NumberToDotsTransformer] });
+let lexer = nearleyLexer(tokens, { transform: [colonTransformer] });
 
 //debugger;
 

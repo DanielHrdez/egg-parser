@@ -5,28 +5,44 @@
  */
 
 function buildNumberValue([numberNode, properties]) {
-  const node = {
+  const number = {
     type: 'value',
     value: numberNode.value,
     length: (numberNode.value + '').length,
   };
-  if (!properties) return node;
-  properties.operator = node;
+  if (!properties) return number;
+  if (!properties.operator) {
+    properties.operator = number;
+    return properties;
+  }
+  let operator = properties.operator;
+  while (operator.operator) {
+    operator = operator.operator;
+  }
+  operator.operator = number;
   return properties;
 }
 
 function buildStringValue([stringNode, properties]) {
   const stringValue = stringNode.value;
   const stringLength = stringValue.length;
-  const string = stringValue.slice(1, stringLength - 1);
-  const node = {
+  const stringLiteral = stringValue.slice(1, stringLength - 1);
+  const string = {
     type: 'value',
-    value: string,
+    value: stringLiteral,
     length: stringLength,
     raw: stringValue,
   };
-  if (!properties) return node;
-  properties.operator = node;
+  if (!properties) return string;
+  if (!properties.operator) {
+    properties.operator = string;
+    return properties;
+  }
+  let operator = properties.operator;
+  while (operator.operator) {
+    operator = operator.operator;
+  }
+  operator.operator = string;
   return properties;
 }
 
@@ -88,6 +104,7 @@ function buildArray([commaExp, properties]) {
     type: 'apply',
     operator: {
       type: 'word',
+      length: 'array'.length,
       name: 'array',
     },
     args: commaExp,
@@ -110,6 +127,7 @@ function buildDo([lp, commaExp, rp]) {
     type: 'apply',
     operator: {
       type: 'word',
+      length: 'do'.length,
       name: 'do',
     },
     args: commaExp,
@@ -122,6 +140,7 @@ function buildObject([commaExp, properties]) {
     type: 'apply',
     operator: {
       type: 'word',
+      length: 'object'.length,
       name: 'object',
     },
     args: commaExp,
@@ -144,8 +163,8 @@ function checkNonEmpty(commaExp) {
   return commaExp;
 }
 
-function dealWithError(error) {
-  throw new Error(error);
+function dealWithError() {
+  throw new Error('Unexpected EOF token');
 }
 
 module.exports = { 

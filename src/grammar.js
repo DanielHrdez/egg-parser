@@ -11,17 +11,17 @@ function id(x) { return x[0]; }
 
 const lexer = require('./lex-pl.js');
 const { 
-        buildStringValue,
-        buildNumberValue,
-        buildRegexpValue,
-        buildWordApplies,
-        buildKind,
-        selector2Bracket,
-        buildArray,
-        buildObject,
-        checkNonEmpty,
-        buildDo,
-        dealWithError,
+  buildStringValue,
+  buildNumberValue,
+  buildRegexpValue,
+  buildWordApplies,
+  buildKind,
+  selector2Bracket,
+  buildArray,
+  buildObject,
+  checkNonEmpty,
+  buildDo,
+  dealWithError,
 } = require('./build-ast.js');
 
 var grammar = {
