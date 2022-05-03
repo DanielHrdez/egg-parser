@@ -20,7 +20,7 @@ jobs: # jobs are made of steps
     steps: # Clone the repo. See https://github.com/actions/checkout
     - uses: actions/checkout@v2
       with:
-        persist-credentials: false
+        persist-credentials: true
     # Example of using an environment variable
     - name: Use Node.js ${{ matrix.node-version }} 
       uses: actions/setup-node@v1 # Install node. See https://github.com/actions/setup-node
