@@ -1,6 +1,6 @@
 {
   "name": "@ull-esit-pl-2122/egg-oop-parser-daniel-hernandez-de_leon-alu0101331720",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Lab for language processors",
   "main": "src/parse.js",
   "bin": {
@@ -24,7 +24,8 @@
     "diagram": "nearley-railroad src/egg.ne -o docs/egg-syntax-diagram.html",
     "link-egg": "npm link @ull-esit-pl-2122/eloquentjsegg",
     "link-gen": "npm link @ull-esit-pl-2122/lexer-generator-daniel-hernandez-de_leon-alu0101331720",
-    "preversion": "git add .",
+    "update-lexer": "cd ../lexer-generator-daniel-hernandez-de_leon-alu0101331720 && npm version patch --force && cd ../egg-oop-parser-daniel-hernandez-de_leon-alu0101331720",
+    "preversion": "npm run update-lexer && git add .",
     "postversion": "git push && git push --tags && npm publish --access=public"
   },
   "keywords": [
