@@ -19,6 +19,8 @@ jobs: # jobs are made of steps
 
     steps: # Clone the repo. See https://github.com/actions/checkout
     - uses: actions/checkout@v2
+      with:
+        persist-credentials: false
     # Example of using an environment variable
     - name: Use Node.js ${{ matrix.node-version }} 
       uses: actions/setup-node@v1 # Install node. See https://github.com/actions/setup-node
@@ -27,7 +29,6 @@ jobs: # jobs are made of steps
         registry-url: https://npm.pkg.github.com/
     - run: echo "//npm.pkg.github.com/:_authToken=${{secrets.GITHUB_TOKEN}}" >> .npmrc
     - run: npm install
-    - run: git config --global url."https://${{ secrets.PL }}@github.com/".insteadOf ssh://git@github.com/
     - run: npm install @ull-esit-pl-2122/lexer-generator-daniel-hernandez-de_leon-alu0101331720
     - run: npm test
       # Environment variables
