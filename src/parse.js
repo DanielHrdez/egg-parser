@@ -32,8 +32,6 @@ function parse(p) {
  *     can't be opened
  */
 function parseFromFile(origin) {
-  //debugger;
-
   const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
   const source = fs.readFileSync(origin, 'utf8');
   parser.feed(source);

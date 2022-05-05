@@ -1,0 +1,136 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Source: bin/eggc.js | Source: bin/eggc.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/tui-doc.css">
+
+    
+</head>
+<body>
+<nav class="lnb" id="lnb">
+    <div class="logo" style="">
+        
+            <img src="img/toast-ui.png" width="100%" height="100%">
+        
+    </div>
+    <div class="title">
+        <h1><a href="index.html" class="link">Source: bin/eggc.js</a></h1>
+        
+    </div>
+    <div class="search-container" id="search-container">
+        <input type="text" placeholder="Search">
+        <ul></ul>
+    </div>
+    
+    <div class="lnb-api hidden"><h3>Externals</h3><ul><li><a href="external-Grammar.html">Grammar</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="external:Grammar_sub"></div></li></ul></div><div class="lnb-api hidden"><h3>Global</h3><ul><li><a href="global.html#compile">compile</a></li></ul></div>
+</nav>
+<div id="resizer"></div>
+
+<div class="main" id="main">
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>#!/usr/bin/env node
+/**
+ * @description A executable to be able to compile eggc lang files
+ * @author Daniel Hernandez de Leon &lt;alu0101331720@ull.edu.es>
+ * @since 25/04/2022
+ */
+
+ 'use strict';
+
+ const fs = require('fs');
+ const {program} = require('commander');
+ const { parseFromFile } = require("../src/parse.js");
+
+ const {version} = require('../package.json');
+
+ /**
+ * A function that compiles a eggc file
+ * @param {string} origin The name of the origin file
+ * @param {string} destination The name of the destination file
+ * @throws Will throw if there are errors in the program or if the files
+ *     can't be opened
+ */
+const compile = (origin, destination = undefined) => {
+  if (destination == undefined) {
+    destination = origin.match(/^[^\.]*/)[0] + '.json';
+  }
+
+  const ast = parseFromFile(origin);
+
+  //console.log(ast);
+  const astString = JSON.stringify(ast, null, 2);
+
+  fs.writeFileSync(destination, astString);
+};
+
+ program
+     .version(version)
+     .arguments('&lt;origin>')
+     .option(
+         '-o, --out &lt;destination>', 'Path for output file. If it isn\'t ' +
+         'specified the path of the origin file will be used,' +
+         'changing the extension to .json',
+     )
+     .description(
+         'Compile a Egg lang file',
+         {
+           origin: 'The path of the file to compile',
+         },
+     )
+     .action((origin, options) => {
+       try {
+         compile(origin, options.out);
+       } catch (err) {
+         console.log('There was an error: ' + err.message);
+       }
+     });
+ 
+ program.parse(process.argv);
+ </code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<footer>
+    <img class="logo" src="img/toast-ui.png" style="">
+    <div class="footer-text">NHN Entertainment. Frontend Development Lab</div>
+</footer>
+<script>prettyPrint();</script>
+<script src="scripts/jquery.min.js"></script>
+<script src="scripts/tui-doc.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+    <script>
+        var id = '_sub'.replace(/"/g, '_');
+        var selectedApi = document.getElementById(id); // do not use jquery selector
+        var $selectedApi = $(selectedApi);
+
+        $selectedApi.removeClass('hidden');
+        $selectedApi.parent().find('.glyphicon').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+        showLnbApi();
+    </script>
+
+</body>
+</html>

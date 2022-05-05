@@ -4,7 +4,6 @@ please-*
 crguezl-egg
 moo-ignore
 egg-parser-solution
-docs/coverage
 oop-evm-releases
 .nyc_output
 bin/evm

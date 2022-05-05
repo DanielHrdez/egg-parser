@@ -1,5 +1,9 @@
 const SPACE = /(?<SPACE>\s+|#.*|\/[*](?:.|\n)*?[*]\/)/; SPACE.skip = true;
-const NUMBER = /(?<NUMBER>[-+]?\d+(\.\d+)?(?:[eE][-+]?\d+)?)/; NUMBER.value =  x => Number(x);
+const NUMBER = /(?<NUMBER>[-+]?\d+(\.\d+)?(?:[eE][-+]?\d+)?)/;
+NUMBER.value = (x) => {
+  if (x.match(/^0\.0+$/g)) return x;
+  return Number(x);
+};
 const STRING = /(?<STRING>"(?:[^"\\]|\\.)*")/;
 const REGEXP = /(?<REGEXP>\/.+\/)/;
 const LP = /(?<LP>\()/;

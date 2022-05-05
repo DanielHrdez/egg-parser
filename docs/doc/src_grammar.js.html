@@ -1,0 +1,141 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Source: src/grammar.js | Source: src/grammar.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/tui-doc.css">
+
+    
+</head>
+<body>
+<nav class="lnb" id="lnb">
+    <div class="logo" style="">
+        
+            <img src="img/toast-ui.png" width="100%" height="100%">
+        
+    </div>
+    <div class="title">
+        <h1><a href="index.html" class="link">Source: src/grammar.js</a></h1>
+        
+    </div>
+    <div class="search-container" id="search-container">
+        <input type="text" placeholder="Search">
+        <ul></ul>
+    </div>
+    
+    <div class="lnb-api hidden"><h3>Externals</h3><ul><li><a href="external-Grammar.html">Grammar</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="external:Grammar_sub"></div></li></ul></div><div class="lnb-api hidden"><h3>Global</h3><ul><li><a href="global.html#compile">compile</a></li></ul></div>
+</nav>
+<div id="resizer"></div>
+
+<div class="main" id="main">
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>// Generated automatically by nearley, version 2.20.1
+// http://github.com/Hardmath123/nearley
+(function () {
+function id(x) { return x[0]; }
+
+/**
+ * The Grammar of the Egg Lang extended with OOP in nearley.js 
+ * @external Grammar
+ * @see {@link https://ull-esit-gradoii-pl.github.io/practicas/egg-oop-parser.html}
+ */
+
+const lexer = require('./lex-pl.js');
+const { 
+  buildStringValue,
+  buildNumberValue,
+  buildRegexpValue,
+  buildWordApplies,
+  buildKind,
+  selector2Bracket,
+  buildArray,
+  buildObject,
+  checkNonEmpty,
+  buildDo,
+  dealWithError,
+} = require('./build-ast.js');
+
+var grammar = {
+    Lexer: lexer,
+    ParserRules: [
+    {"name": "program", "symbols": ["expression", (lexer.has("EOF") ? {type: "EOF"} : EOF)], "postprocess": id},
+    {"name": "expression", "symbols": [(lexer.has("STRING") ? {type: "STRING"} : STRING), "optProperties"], "postprocess": buildStringValue},
+    {"name": "expression", "symbols": [(lexer.has("NUMBER") ? {type: "NUMBER"} : NUMBER), "optProperties"], "postprocess": buildNumberValue},
+    {"name": "expression", "symbols": [(lexer.has("REGEXP") ? {type: "REGEXP"} : REGEXP), "optProperties"], "postprocess": buildRegexpValue},
+    {"name": "expression", "symbols": [(lexer.has("WORD") ? {type: "WORD"} : WORD), "applies"], "postprocess": buildWordApplies},
+    {"name": "expression", "symbols": ["bracketExp", "optProperties"], "postprocess": buildArray},
+    {"name": "expression", "symbols": ["curlyExp", "optProperties"], "postprocess": buildObject},
+    {"name": "expression", "symbols": [{"literal":"("}, "commaExp", {"literal":")"}], "postprocess": buildDo},
+    {"name": "expression", "symbols": [(lexer.has("EOF") ? {type: "EOF"} : EOF)], "postprocess": dealWithError},
+    {"name": "applies", "symbols": ["calls"], "postprocess": id},
+    {"name": "applies", "symbols": ["properties"], "postprocess": id},
+    {"name": "applies", "symbols": [], "postprocess": () => null},
+    {"name": "calls", "symbols": ["parenExp", "applies"], "postprocess": buildKind['apply']},
+    {"name": "properties", "symbols": ["bracketExp", "applies"], "postprocess": buildKind['property']},
+    {"name": "properties", "symbols": ["selector", "applies"], "postprocess": buildKind['property']},
+    {"name": "parenExp", "symbols": [{"literal":"("}, "commaExp", {"literal":")"}], "postprocess": ([lp, commaExp, rp]) => commaExp},
+    {"name": "bracketExp", "symbols": [{"literal":"["}, "commaExp", {"literal":"]"}], "postprocess": ([lb, commaExp, rb]) => checkNonEmpty(commaExp)},
+    {"name": "curlyExp", "symbols": [{"literal":"{"}, "commaExp", {"literal":"}"}], "postprocess": ([lc, commaExp, rc]) => commaExp},
+    {"name": "selector", "symbols": [{"literal":"."}, (lexer.has("WORD") ? {type: "WORD"} : WORD)], "postprocess": selector2Bracket},
+    {"name": "selector", "symbols": [{"literal":"."}, (lexer.has("NUMBER") ? {type: "NUMBER"} : NUMBER)], "postprocess": selector2Bracket},
+    {"name": "commaExp", "symbols": [], "postprocess": () => []},
+    {"name": "commaExp", "symbols": ["expression", {"literal":","}, "commaExp"], "postprocess": ([exp, comma, commaExp]) => [exp, ...commaExp]},
+    {"name": "commaExp", "symbols": ["expression"], "postprocess": ([e]) => [e]},
+    {"name": "optProperties", "symbols": [], "postprocess": () => null},
+    {"name": "optProperties", "symbols": ["properties"], "postprocess": id}
+]
+  , ParserStart: "program"
+}
+if (typeof module !== 'undefined'&amp;&amp; typeof module.exports !== 'undefined') {
+   module.exports = grammar;
+} else {
+   window.grammar = grammar;
+}
+})();
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<footer>
+    <img class="logo" src="img/toast-ui.png" style="">
+    <div class="footer-text">NHN Entertainment. Frontend Development Lab</div>
+</footer>
+<script>prettyPrint();</script>
+<script src="scripts/jquery.min.js"></script>
+<script src="scripts/tui-doc.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+    <script>
+        var id = '_sub'.replace(/"/g, '_');
+        var selectedApi = document.getElementById(id); // do not use jquery selector
+        var $selectedApi = $(selectedApi);
+
+        $selectedApi.removeClass('hidden');
+        $selectedApi.parent().find('.glyphicon').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+        showLnbApi();
+    </script>
+
+</body>
+</html>
