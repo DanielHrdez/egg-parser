@@ -41,18 +41,7 @@ function parseFromFile(origin) {
 };
 
 let getTokens = function(line) {
-  const result = [];
-  let t = null;
-  do {
-    try {
-      t = lex(line);
-      result.push(t);
-    } catch (e) {
-      result.push({type: 'ERROR', value: e});
-      break;
-    }
-  } while (t);
-  return result;
+  return lex.lexer(line);
 };
 
 module.exports = {

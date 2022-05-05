@@ -8,7 +8,7 @@
 'use strict';
 
 const should = require('chai').should();
-const { parseFromFile } = require("../src/parse.js");
+const { parseFromFile, parBalance, getTokens } = require("../src/parse.js");
 
 const fs = require('fs');
 const path = require('path');
@@ -59,5 +59,57 @@ describe('Compiler errors', () => {
 
   testList.forEach((test) => {
     runTest(test);
+  });
+});
+
+describe('par balance', () => {
+  it('should be check the balance of parenthesis', () => {
+    parBalance('()').should.equal(0);
+    parBalance('()()').should.equal(0);
+    parBalance('(())').should.equal(0);
+    parBalance('()()()').should.equal(0);
+    parBalance('(()())').should.equal(0);
+    parBalance('(()()())').should.equal(0);
+    parBalance('(()()()())').should.equal(0);
+  });
+
+  it('should be check the non balance of parenthesis', () => {
+    parBalance('(()').should.not.equal(0);
+    parBalance('()())()').should.not.equal(0);
+    parBalance('(()()()()').should.not.equal(0);
+    parBalance('(()()()()()').should.not.equal(0);
+    parBalance('(()()()()()()').should.not.equal(0);
+  });
+
+  it('should be check the balance of brackets', () => {
+    parBalance('[]').should.equal(0);
+    parBalance('[]()').should.equal(0);
+    parBalance('[()]').should.equal(0);
+    parBalance('[]()()').should.equal(0);
+    parBalance('[()()]').should.equal(0);
+    parBalance('[()()()]').should.equal(0);
+    parBalance('[()()()()]').should.equal(0);
+  });
+
+  it('should be check the non balance of brackets', () => {
+    parBalance('[()').should.not.equal(0);
+    parBalance('()[)()]').should.not.equal(0);
+    parBalance('[()()()()').should.not.equal(0);
+    parBalance('[()()()()()').should.not.equal(0);
+    parBalance('[()()()()()()').should.not.equal(0);
+  });
+});
+
+describe('getTokens', () => {
+
+  it('should be get the tokens', () => {
+    const tokens = getTokens('&');
+    tokens.should.deep.equal([{
+      col: 1,
+      length: 1,
+      line: 1,
+      type: 'WORD',
+      value: '&',
+    }]);
   });
 });
