@@ -8,7 +8,7 @@
 'use strict';
 
 const should = require('chai').should();
-const { parseFromFile, parBalance, getTokens } = require("../src/parse.js");
+const { parseFromFile, parBalance, getTokens, parse } = require("../src/parse.js");
 
 const fs = require('fs');
 const path = require('path');
@@ -111,5 +111,16 @@ describe('getTokens', () => {
       type: 'WORD',
       value: '&',
     }]);
+  });
+});
+
+describe('parse', () => {
+  it('should be parse the tokens', () => {
+    const result = parse('a()');
+    result.should.deep.equal({
+      type: 'apply',
+      operator: { type: 'word', length: 1, name: 'a' },
+      args: []
+    });
   });
 });
