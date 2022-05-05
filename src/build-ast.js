@@ -112,7 +112,7 @@ function buildObject([commaExp, properties]) {
 }
 
 function checkNonEmpty(commaExp) {
-  if (commaExp.length === 0) throw new Error('Empty expression');
+  if (commaExp.length === 0) throw new Error('Unexpected Empty array');
   return commaExp;
 }
 

@@ -1,0 +1,24 @@
+{
+  "type": "apply",
+  "operator": { "type": "word", "length": 2, "name": "do" },
+  "args": [
+    {
+      "type": "apply",
+      "operator": { "type": "word", "length": 5, "name": "print" },
+      "args": [
+        {
+          "type": "property",
+          "operator": {
+            "type": "apply",
+            "operator": { "type": "word", "length": 6, "name": "object" },
+            "args": [
+              { "type": "value", "value": "x", "length": 1, "raw": "\"x\"" },
+              { "type": "value", "value": 5, "length": 1 }
+            ]
+          },
+          "args": [ { "type": "value", "value": "x", "length": 1, "raw": "\"x\"" } ]
+        }
+      ]
+    }
+  ]
+}

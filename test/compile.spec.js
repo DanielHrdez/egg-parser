@@ -43,6 +43,7 @@ describe('Compiler errors', () => {
   const basePath = 'test/errors/';
 
   const testList = [
+    { name: 'unexpected-empty-array', error: /Unexpected.*Empty.*array/i },
     { name: 'unexpected-token-comma', error: /Unexpected.*token.*,/i },
     { name: 'unexpected-eof',   error: /Unexpected.*EOF.*token/i },
     { name: 'unexpected-token-word', error: /Unexpected.*WORD.token/i },
