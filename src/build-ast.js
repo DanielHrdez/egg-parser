@@ -59,13 +59,11 @@ function buildPropertyOrApply([parenExp, applies], kind) {
 }
 
 function selector2Bracket([_, word]) {
-  const name = word.value;
-  return [{
-    type: 'value',
-    value: name,
-    length: name.length,
-    raw: `"${name}"`,
-  }];
+  if (word.type === 'WORD') {
+    word.value = `"${word.value}"`;
+    return [buildStringValue([word])];
+  }
+  if (word.type === 'NUMBER') return [buildNumberValue([word])];
 }
 
 const buildKind = {

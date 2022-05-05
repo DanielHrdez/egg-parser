@@ -24,7 +24,6 @@ function numberToDotsTransformer(tokens) {
     ) {
       const [integer, decimal] = String(next.value).split('.');
       next.value = +integer;
-      next.length = integer.length;
       tokens.splice(index + 2, 0, {
         type: 'DOT',
         value: '.',
@@ -33,7 +32,6 @@ function numberToDotsTransformer(tokens) {
       tokens.splice(index + 3, 0, {
         type: 'NUMBER',
         value: +decimal,
-        length: decimal.length,
       });
     }
   });

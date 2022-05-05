@@ -1,0 +1,16 @@
+{
+  "type": "property",
+  "operator": {
+    "type": "property",
+    "operator": {
+      "type": "apply",
+      "operator": { "type": "word", "length": 5, "name": "array" },
+      "args": [
+        { "type": "value", "value": 1, "length": 1 },
+        { "type": "value", "value": 2, "length": 1 }
+      ]
+    },
+    "args": [ { "type": "value", "value": 0, "length": 1 } ]
+  },
+  "args": [ { "type": "value", "value": 0, "length": 1 } ]
+}
