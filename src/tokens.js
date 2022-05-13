@@ -5,7 +5,14 @@ NUMBER.value = (x) => {
   return Number(x);
 };
 const STRING = /(?<STRING>"(?:[^"\\]|\\.)*")/;
-const REGEXP = /(?<REGEXP>\/.+\/)/;
+const REGEXP = /(?<REGEXP>r\/((?:[^\/\\]|\\.)*)\/(\w*?\b)?)/;
+REGEXP.value = (value) => {
+  let [source, flags] = value.split('/').slice(1);
+  return {
+      type: 'RegExp',
+      info: [ source, flags]
+  };
+};
 const LP = /(?<LP>\()/;
 const RP = /(?<RP>\))/;
 const LB = /(?<LB>\[)/;
@@ -14,7 +21,7 @@ const LC = /(?<LC>\{)/;
 const RC = /(?<RC>\})/;
 const DOT = /(?<DOT>\.)/;
 const COLON = /(?<COLON>:)/;
-const WORD  = /(?<WORD>[^\s\(\),"\[\]\.:\{\}]+)/;
+const WORD = /(?<WORD>[^\s\(\),"\[\]\.:\{\}]+)/;
 const COMMA = /(?<COMMA>,)/;
 
 /** Tokens object: definitions */
@@ -31,8 +38,8 @@ const tokens = [
   DOT,
   COLON,
   COMMA,
-  WORD,
   REGEXP,
+  WORD,
 ];
 
 module.exports = {SPACE, tokens};

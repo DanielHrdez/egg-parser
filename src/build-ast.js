@@ -40,6 +40,14 @@ function buildStringValue([stringNode, properties]) {
   return buildNode(string, properties);
 }
 
+function buildRegexpValue([regexpNode, properties]) {
+  const regexp = {
+    type: 'value',
+    value: regexpNode.value,
+  };
+  return buildNode(regexp, properties);
+}
+
 function buildWordApplies([word, applies]) {
   const wordNode = {
     type: 'word',
@@ -120,8 +128,9 @@ function dealWithError() {
 
 module.exports = { 
   buildStringValue, 
-  buildNumberValue, 
-  buildWordApplies, 
+  buildNumberValue,
+  buildRegexpValue,
+  buildWordApplies,
   buildKind,
   selector2Bracket,
   buildArray,
